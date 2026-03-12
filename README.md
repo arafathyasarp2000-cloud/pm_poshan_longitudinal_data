@@ -1,2 +1,2 @@
 # pm_poshan_longitudinal_data
-This project aims to construct an analysis-ready longitudinal time series dataset from daily administrative data on meals served and not served under PM-POSHAN across India. I use RStudio for converting the relevant data from the PDFs into CSV files and Stata for appending the daily cross-sectional data to a longitudinal time-series data.
+This repository contains scripts and data for building a longitudinal dataset from PM POSHAN's Automated Monitoring System (AMS) daily “Meal Not Served” reports. The project uses R to extract tables from PDFs, clean inconsistencies, and combine them into a structured time series dataset for analysis.
