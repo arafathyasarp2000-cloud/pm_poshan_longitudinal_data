@@ -6,9 +6,16 @@ library(tabulapdf)
 library(dplyr)
 library(stringr)
 
-
+# ---------------------------
+#define paths (specify data path)
+# ---------------------------
+#data_path <- ""
 base_path <- file.path(data_path, "meal_not_served")
 out_path <- file.path(base_path, "clean_csv")
+
+# ---------------------------
+#extraction
+# ---------------------------
 
 process_file <- function(file_stub){
   
@@ -30,7 +37,9 @@ process_file <- function(file_stub){
     "food_grains","fund","cook_cum_helper","ngo_shg","holidays","others"
   )
   
-  #extract date from filename
+# ---------------------------
+#extracting date from file name
+# ---------------------------
   parts <- strsplit(file_stub, "_")[[1]]
   
   month <- parts[3]
@@ -45,12 +54,12 @@ process_file <- function(file_stub){
       .before = sno
     )
   
-  #saving
+# ---------------------------
+#save as csv
+# ---------------------------
   write.csv(df,
             paste0(out_path, file_stub, ".csv"),
             row.names = FALSE)
-  
-  cat("Done:", file_stub, "\n")
 }
 
 # ---------------------------
@@ -87,8 +96,6 @@ out_path <- file.path(base_path, "clean_csv")
 process_file <- function(file_stub){
   
   file <- paste0(base_path, file_stub, ".pdf")
-  
-  cat("Processing:", file_stub, "\n")
   
   tables <- extract_tables(file, method = "stream")
   
@@ -165,24 +172,23 @@ library(tidyr)
 library(dplyr)
 library(stringr)
 
-base_path <- "D:/OneDrive - Azim Premji Foundation/Documents/iic_stuff/meal_not_served/"
-out_path  <- paste0(base_path, "clean_csv/")
+base_path <- file.path(data_path, "meal_not_served")
+out_path <- file.path(base_path, "clean_csv")
 
 process_file <- function(file_stub){
   
   file <- paste0(base_path, file_stub, ".pdf")
-  cat("Processing:", file_stub, "\n")
-  
+ 
   tables <- extract_tables(file, method = "stream")
   
   df <- do.call(rbind, lapply(tables, as.data.frame))
   df <- as.data.frame(df)
   
-  # -------- cleaning --------
+  # cleaning
   df <- df[-(1:4), ]
   rownames(df) <- NULL
   
-  # remove last 5 columns safely
+  # remove last 5 columns 
   if (ncol(df) > 5) {
     df <- df[, 1:(ncol(df) - 5)]
   }
@@ -198,7 +204,7 @@ process_file <- function(file_stub){
     "food_grains","fund","cook_cum_helper","ngo_shg","holidays","others"
   )
   
-  # first row numeric fix (your rule)
+  # first row numeric fix 
   if (nrow(df) > 0) {
     numeric_cols <- 3:ncol(df)
     df[1, numeric_cols] <- "0"
@@ -222,8 +228,6 @@ process_file <- function(file_stub){
   write.csv(df,
             paste0(out_path, file_stub, ".csv"),
             row.names = FALSE)
-  
-  cat("Done:", file_stub, "\n")
 }
 
 # ---------------------------
@@ -249,7 +253,8 @@ rm(list = ls())
 library(dplyr)
 library(readr)
 
-base_path <- "D:/OneDrive - Azim Premji Foundation/Documents/iic_stuff/meal_not_served/clean_csv/"
+base_path <- file.path(data_path, "meal_not_served")
+out_path <- file.path(base_path, "clean_csv")
 
 files_jan <- sprintf("ams_mns_1_%02d.csv", 5:31)
 files_feb <- sprintf("ams_mns_2_%02d.csv", 1:4)
@@ -280,6 +285,7 @@ write_csv(
   combined_data,
   paste0(base_path, "ams_mns_combined_r.csv")
 )
+
 
 
 
