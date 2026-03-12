@@ -6,8 +6,9 @@ library(tabulapdf)
 library(dplyr)
 library(stringr)
 
-base_path <- "D:/OneDrive - Azim Premji Foundation/Documents/iic_stuff/meal_not_served/"
-out_path  <- paste0(base_path, "clean_csv/")
+
+base_path <- file.path(data_path, "meal_not_served")
+out_path <- file.path(base_path, "clean_csv")
 
 process_file <- function(file_stub){
   
@@ -80,8 +81,8 @@ library(tidyr)
 library(dplyr)
 library(stringr)
 
-base_path <- "D:/OneDrive - Azim Premji Foundation/Documents/iic_stuff/meal_not_served/"
-out_path  <- paste0(base_path, "clean_csv/")
+base_path <- file.path(data_path, "meal_not_served")
+out_path <- file.path(base_path, "clean_csv")
 
 process_file <- function(file_stub){
   
@@ -279,5 +280,6 @@ write_csv(
   combined_data,
   paste0(base_path, "ams_mns_combined_r.csv")
 )
+
 
 
